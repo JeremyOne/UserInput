@@ -12,10 +12,11 @@ namespace JeremyOne.UserInput {
 		string[] NameIndicators = { "/" };
 		char[] ValueSeperators = { ':' };
 
-		/// <param name="_NameIndicators">Strings that signal the start of a argument (default: '/')</param>
-		/// <param name="_ValueSeperators">Strings that signal the start of the value in an argument (default: ':')
-		/// Note: A space is ALWAYS a seperator unless values are escaped with double quotes</param>
-		public ConsoleArguments(string[] _Arguments, string[] _NameIndicators = null, char[] _ValueSeperators = null) {
+        /// <param name="_Arguments">Standard arguments array from console application</param>
+        /// <param name="_NameIndicators">Strings that signal the start of a argument (default: '/')</param>
+        /// <param name="_ValueSeperators">Strings that signal the start of the value in an argument (default: ':')
+        /// Note: A space is ALWAYS a seperator unless values are escaped with double quotes</param>
+        public ConsoleArguments(string[] _Arguments, string[] _NameIndicators = null, char[] _ValueSeperators = null) {
 			if(_NameIndicators != null) {
 				//order by length to make sure that longer indicators are processed first ('--' before '-').
 				NameIndicators = _NameIndicators.OrderByDescending(a => a.Length).ToArray();
@@ -28,10 +29,14 @@ namespace JeremyOne.UserInput {
 			ReadArguments(_Arguments);
 		}
 
+        /// <param name="_Arguments">Standard arguments array from console application</param>
 		public ConsoleArguments(string[] _Arguments) {
 			ReadArguments(_Arguments);
 		}
 
+        /// <summary>
+        /// Parses the arguments
+        /// </summary>
 		private void ReadArguments(string[] args) {
 			string lastArgName = "";
 
@@ -77,6 +82,9 @@ namespace JeremyOne.UserInput {
 			}
 		}
 
+        /// <summary>
+        /// Appends a value to a argument array/list
+        /// </summary>
 		private void AppendArgumentValue(string Name, string Value) {
 			Name = Name.ToLower();
 
@@ -89,6 +97,9 @@ namespace JeremyOne.UserInput {
 			}
 		}
 
+        /// <summary>
+        /// Adds a argument to list list of parsed arguments
+        /// </summary>
 		private void AddArgument(string Name, string Value) {
 			Name = Name.ToLower();
 
@@ -100,11 +111,18 @@ namespace JeremyOne.UserInput {
 			}
 		}
 
+        /// <summary>
+        /// Checks if a argument with this name exists
+        /// </summary>
 		public bool ArgumentExists(string Name) {
 			Name = Name.ToLower();
 			return (Arguments.ContainsKey(Name));
 		}
 
+        /// <summary>
+        /// Checks if a list of arguments exists
+        /// </summary>
+        /// <returns>True if all arguments exist</returns>
 		public bool ArgumentsExists(params string[] Names) {
 			foreach(string name in Names) {
 				if(ArgumentExists(name) == false) {
@@ -115,6 +133,9 @@ namespace JeremyOne.UserInput {
 			return true;
 		}
 
+        /// <summary>
+        /// Checks of a argument has more than one value
+        /// </summary>
 		public bool ArgumentValueIsArray(string Name) {
 			Name = Name.ToLower();
 			if(ArgumentExists(Name)) {
@@ -124,31 +145,45 @@ namespace JeremyOne.UserInput {
 			}
 		}
 
+        /// <summary>
+        /// Gets the first value of a argument
+        /// </summary>
+        /// <param name="DefaultValue">The return value if the argument is not found</param>
+        /// <returns></returns>
 		public string GetValue(string Name, string DefaultValue) {
 			Name = Name.ToLower();
-			if(ArgumentExists(Name) && ArgumentValueIsArray(Name) == false) {
+			if(ArgumentExists(Name)) {
 				return Arguments[Name.ToLower()][1];
 			} else {
 				return DefaultValue;
 			}
 		}
 
-		public string GetValue(string Name) {
+        /// <summary>
+        /// Gets the first value of a argument
+        /// </summary>
+        public string GetValue(string Name) {
 			return GetValue(Name, null);
 		}
 
-		public string[] GetValueList(string Name) {
+        /// <summary>
+        /// Gets all values of a argument
+        /// </summary>
+        public string[] GetValueList(string Name) {
 			Name = Name.ToLower();
-			if(ArgumentExists(Name) &&
-	            string.IsNullOrEmpty(Arguments[Name.ToLower()]) == false) {
 
+			if(ArgumentExists(Name) && ArgumentValueIsArray(Name)) {
 				return Arguments[Name.ToLower()];
 			} else {
 				return null;
 			}
 		}
 
-		public int GetIntValue(string Name, int DefaultValue) {
+        /// <summary>
+        /// Gets the first value of a argument as an integer
+        /// </summary>
+        /// <param name="DefaultValue">The return value if the argument is not found</param>
+        public int GetIntValue(string Name, int DefaultValue) {
 			int intValue;
 			string stringValue = GetValue(Name);
 
@@ -160,6 +195,10 @@ namespace JeremyOne.UserInput {
 			}
 		}
 
+        /// <summary>
+        /// Gets the first value of a argument as an integer
+        /// </summary>
+        /// <returns>Returns the value, or null if not found</returns>
 		public Nullable<int> GetIntValue(string Name) {
 			int intValue;
 			string stringValue = GetValue(Name);
@@ -172,7 +211,11 @@ namespace JeremyOne.UserInput {
 			}
 		}
 
-		public decimal GetDecimalValue(string Name, decimal DefaultValue) {
+        /// <summary>
+        /// Gets the first value of a argument as a decimal
+        /// </summary>
+        /// <param name="DefaultValue">The return value if the argument is not found</param>
+        public decimal GetDecimalValue(string Name, decimal DefaultValue) {
 			decimal decimalValue;
 			string stringValue = GetValue(Name);
 
@@ -184,6 +227,10 @@ namespace JeremyOne.UserInput {
 			}
 		}
 
+        /// <summary>
+        /// Gets the first value of a argument as a decimal
+        /// </summary>
+        /// <returns>Returns the value, or null if not found</returns>
 		public Nullable<decimal> GetDecimalValue(string Name) {
 			decimal decimalValue;
 			string stringValue = GetValue(Name);
@@ -196,7 +243,11 @@ namespace JeremyOne.UserInput {
 			}
 		}
 
-		public long GetLongValue(string Name, long DefaultValue) {
+        /// <summary>
+        /// Gets the first value of a argument as a long
+        /// </summary>
+        /// <param name="DefaultValue">The return value if the argument is not found</param>
+        public long GetLongValue(string Name, long DefaultValue) {
 			long lValue;
 			string stringValue = GetValue(Name);
 
@@ -208,6 +259,10 @@ namespace JeremyOne.UserInput {
 			}
 		}
 
+        /// <summary>
+        /// Gets the first value of a argument as a long
+        /// </summary>
+        /// <returns>Returns the value, or null if not found</returns>
 		public Nullable<long> GetLongValue(string Name) {
 			long lValue;
 			string stringValue = GetValue(Name);

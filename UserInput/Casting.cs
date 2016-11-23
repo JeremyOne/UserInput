@@ -84,6 +84,6 @@ namespace JeremyOne.UserInput
             return ToObject;
 
         }
-
+        
     }
 }

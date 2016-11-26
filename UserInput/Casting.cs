@@ -8,7 +8,8 @@ namespace JeremyOne.UserInput
 {
     public class Casting
     {
-
+        
+        ///Get a decimal from a object, usualy a string, or a object that is parsable from the .ToString() method
         public static Decimal GetDecimal(object Input) {
             var dec = new decimal();
             string value = Input.ToString();
@@ -18,6 +19,7 @@ namespace JeremyOne.UserInput
             return dec;
         }
 
+        ///<summary>Get a int from a object, usualy a string, or a object that is parsable from the .ToString() method </summary>
         public static int GetInt(object Input) {
             int valueInt;
             string valueString = Input.ToString();
@@ -27,6 +29,7 @@ namespace JeremyOne.UserInput
             return valueInt;
         }
 
+        ///<summary>Get a Date from a object, usualy a string, or a object that is parsable from the .ToString() method </summary>
         public static Nullable<DateTime> GetDate(object Input) {
             if (Input is DateTime)
             {

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace JeremyOne.UserInput {
     public class Argument {
 
+        ///<summary>The name/key of this argument, used for lookups</summary>
         public string Name { get; set; }
 
         private List<string> Values = new List<string>();
@@ -28,6 +29,7 @@ namespace JeremyOne.UserInput {
             Values = _Values.ToList();
         }
 
+        ///<summary>Access arguments values by index</summary>
         public Argument this[int index] {
             get {
                 if (index < Values.Count()) {
@@ -37,17 +39,21 @@ namespace JeremyOne.UserInput {
                 }
             }
         }
-
+        
+        ///<summary>Returns true if the key (case insensitive) exits</summary>
         public bool Exists { get; set; }
 
+        ///<summary>Returns true if this argument has more than one value</summary>
         public bool IsArray() {
             return (Values.Count() > 1);
         }
 
+        ///<summary>Returns true if this argument has any number of values</summary>
         public bool HasValue() {
             return (Values.Count() > 0);
         }
 
+        ///<summary>Returns the first value in the arument, or null if it does not exist</summary>
         public string Value {
             get {
                 if (HasValue()) {
@@ -58,6 +64,7 @@ namespace JeremyOne.UserInput {
             }
         }
 
+        ///<summary>Returns the first value or passed default vaue if it does not exist </summary>
         public string ValueOrDefault(string Default) {
             var _value = Value;
 
@@ -68,6 +75,7 @@ namespace JeremyOne.UserInput {
             }
         }
 
+        ///<summary>Returns the first value in the argument as an integer, or null if it does not exist or can't be parsed</summary>
         public int? ValueInt {
             get {
                 int valueInt;
@@ -90,6 +98,7 @@ namespace JeremyOne.UserInput {
             }
         }
 
+        ///<summary>Returns the first value in the argument as an decimal, or null if it does not exist or can't be parsed</summary>
         public decimal? ValueDecimal {
             get {
                 decimal valueDecimal;
@@ -112,6 +121,7 @@ namespace JeremyOne.UserInput {
             }
         }
 
+        ///<summary>Returns the first value in the argument as an long, or null if it does not exist or can't be parsed</summary>
         public long? ValueLong {
             get {
                 long valueLong;
@@ -134,6 +144,7 @@ namespace JeremyOne.UserInput {
             }
         }
 
+        ///<summary>Returns the first value in the argument as a DateTime, or null if it does not exist or can't be parsed</summary>
         public DateTime? ValueDateTime {
             get {
                 DateTime valueDateTime;

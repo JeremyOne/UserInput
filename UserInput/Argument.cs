@@ -87,7 +87,8 @@ namespace JeremyOne.UserInput {
                 }
             }            
         }
-
+        
+        ///<summary>Returns the first value in the argument as an integer, or the provided default if it does not exist or can't be parsed</summary>
         public int ValueIntOrDefault(int Default) {
             var _value = ValueInt;
 
@@ -111,6 +112,7 @@ namespace JeremyOne.UserInput {
             }
         }
 
+        ///<summary>Returns the first value in the argument as an decimal, or the provided default if it does not exist or can't be parsed</summary>
         public decimal ValueDecimalOrDefault(decimal Default) {
             var _value = ValueDecimal;
 
@@ -134,6 +136,7 @@ namespace JeremyOne.UserInput {
             }
         }
 
+        ///<summary>Returns the first value in the argument as a long, or the provided default if it does not exist or can't be parsed</summary>
         public long ValueLongOrDefault(long Default) {
             var _value = ValueLong;
 
@@ -157,6 +160,7 @@ namespace JeremyOne.UserInput {
             }
         }
 
+        ///<summary>Returns the first value in the argument as an DateTime, or the provided default if it does not exist or can't be parsed</summary>
         public DateTime ValueDateTimeOrDefault(DateTime Default) {
             var _value = ValueDateTime;
 
@@ -167,6 +171,7 @@ namespace JeremyOne.UserInput {
             }
         }
 
+        ///<summary>Returns the first value in the argument as an integer, or the provided default if it does not exist or can't be parsed</summary>
         public void AddValue(string NewValue) {
             Values.Add(NewValue);
         }

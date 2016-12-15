@@ -17,7 +17,7 @@ namespace JeremyOne.UserInput.NunitTests {
 
             Assert.AreEqual(result1.Length, 3);
             Assert.AreEqual(result2.Length, 2);
-            Assert.AreEqual(result1[1], "$1,234.56");
+            Assert.AreEqual(result2[1], "$1,234.56");
 
             string test2 = "test,'$1,234.56',',,,,', '',last item";
             string[] result3 = test2.SmartSplit(',', '\'');

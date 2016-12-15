@@ -10,6 +10,7 @@ namespace JeremyOne.UserInput {
         string[] NameIndicators = { "/" };
         char[] ValueSeperators = { ':' };
 
+	/// <summary>A library for parcing arguments from c# and other dotnet console applications</summary
         /// <param name="_Arguments">Standard arguments array from console application</param>
         /// <param name="_NameIndicators">Strings that signal the start of a argument (default: '/')</param>
         /// <param name="_ValueSeperators">Strings that signal the start of the value in an argument (default: ':')

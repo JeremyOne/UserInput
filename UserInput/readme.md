@@ -72,4 +72,17 @@ Yet to implement
 Yet to implement
 
 ## String Extentions
-Yet to implement
+
+###string.SmartSplit()
+Splits a string while respecting escape charcters, useful for splitting CSV's that may also have commas in their values
+
+Example useage:
+```c#
+string example = "test,'$1,234.56'";
+
+string[] standardSplit = example.Split(',');
+//Returns: ["test", "$1", "234.56"]
+
+string[] smartSplit = example.SmartSplit(',', '\'');
+//Returns: ["test", "$1,234.56"]
+```

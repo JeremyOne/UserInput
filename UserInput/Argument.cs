@@ -5,11 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace JeremyOne.UserInput {
-    public class Argument {
+    public class Argument : List<string> {
 
         public string Name { get; set; }
-
-        private List<string> Values = new List<string>();
 
         public Argument(string _Name, bool _Exists) {
             Name = _Name;
@@ -19,39 +17,37 @@ namespace JeremyOne.UserInput {
         public Argument(string _Name, string _Value, bool _Exists) {
             Name = _Name;
             Exists = _Exists;
-            Values = new List<string> { _Value };
+            this.Add(_Value);
         }
 
         public Argument(string _Name, string[] _Values, bool _Exists) {
             Name = _Name;
             Exists = _Exists;
-            Values = _Values.ToList();
+            this.AddRange(_Values);
         }
 
-        public Argument this[int index] {
-            get {
-                if (index < Values.Count()) {
-                    return new Argument(Name, Values[index], true);
-                } else {
-                    throw new IndexOutOfRangeException();
-                }
+        public Argument GetItem(int index) {
+            if (index < this.Count()) {
+                return new Argument(Name, this[index], true);
+            } else {
+                throw new IndexOutOfRangeException();
             }
         }
 
-        public bool Exists { get; set; }
+        new public bool Exists { get; set; }
 
         public bool IsArray() {
-            return (Values.Count() > 1);
+            return (this.Count() > 1);
         }
 
         public bool HasValue() {
-            return (Values.Count() > 0);
+            return (this.Count() > 0);
         }
 
         public string Value {
             get {
                 if (HasValue()) {
-                    return Values[0];
+                    return this[0];
                 } else {
                     return null;
                 }
@@ -72,7 +68,7 @@ namespace JeremyOne.UserInput {
             get {
                 int valueInt;
 
-                if (HasValue() && int.TryParse(Values[0], out valueInt)) {
+                if (HasValue() && int.TryParse(this[0], out valueInt)) {
                     return valueInt;
                 } else {
                     return null;
@@ -94,7 +90,7 @@ namespace JeremyOne.UserInput {
             get {
                 decimal valueDecimal;
 
-                if (HasValue() && decimal.TryParse(Values[0], out valueDecimal)) {
+                if (HasValue() && decimal.TryParse(this[0], out valueDecimal)) {
                     return valueDecimal;
                 } else {
                     return null;
@@ -116,7 +112,7 @@ namespace JeremyOne.UserInput {
             get {
                 long valueLong;
 
-                if (HasValue() && long.TryParse(Values[0], out valueLong)) {
+                if (HasValue() && long.TryParse(this[0], out valueLong)) {
                     return valueLong;
                 } else {
                     return null;
@@ -138,7 +134,7 @@ namespace JeremyOne.UserInput {
             get {
                 DateTime valueDateTime;
 
-                if (HasValue() && DateTime.TryParse(Values[0], out valueDateTime)) {
+                if (HasValue() && DateTime.TryParse(this[0], out valueDateTime)) {
                     return valueDateTime;
                 } else {
                     return null;
@@ -156,8 +152,68 @@ namespace JeremyOne.UserInput {
             }
         }
 
-        public void AddValue(string NewValue) {
-            Values.Add(NewValue);
+        /// <summary>
+        /// Gets an list of values from this argument as an array of nullable decimals
+        /// </summary>
+        public List<decimal?> ToDecimalList() {
+            var l = new List<decimal?>();
+
+            if (this.IsArray()) {
+                foreach (string thisString in this) {
+                    decimal thisDecimal;
+
+                    if (decimal.TryParse(thisString, out thisDecimal)) {
+                        l.Add(thisDecimal);
+                    } else {
+                        l.Add(null);
+                    }
+                }
+            }
+
+            return l;
+        }
+
+
+        /// <summary>
+        /// Gets an list of values from this argument as an array of nullable ints
+        /// </summary>
+        public List<int?> ToIntList() {
+            var l = new List<int?>();
+
+            if (this.IsArray()) {
+                foreach (string thisString in this) {
+                    int thisInt;
+
+                    if (int.TryParse(thisString, out thisInt)) {
+                        l.Add(thisInt);
+                    } else {
+                        l.Add(null);
+                    }
+                }
+            }
+
+            return l;
+        }
+
+        /// <summary>
+        /// Gets an list of values from this argument as an array of nullable longs
+        /// </summary>
+        public List<long?> ToLongList() {
+            var l = new List<long?>();
+
+            if (this.IsArray()) {
+                foreach (string thisString in this) {
+                    long thisLong;
+
+                    if (long.TryParse(thisString, out thisLong)) {
+                        l.Add(thisLong);
+                    } else {
+                        l.Add(null);
+                    }
+                }
+            }
+
+            return l;
         }
 
     }

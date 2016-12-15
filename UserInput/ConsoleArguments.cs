@@ -55,9 +55,9 @@ namespace JeremyOne.UserInput {
                 if (hasNameIndicator == false) {
                     //argument does not start with with an indicator, so assume it is part of a list
                     if (arg.Contains(" ")) {
-                        lastArg.AddValue(arg.Trim('\'').Trim('"'));
+                        lastArg.Add(arg.Trim('\'').Trim('"'));
                     } else {
-                        lastArg.AddValue(arg);
+                        lastArg.Add(arg);
                     }
                 } else {
                     string name = arg.Remove(0, nameIndicator.Length).ToLower();
@@ -86,7 +86,7 @@ namespace JeremyOne.UserInput {
                                 values[i] = values[i].Trim('\'').Trim('"');
                             }
 
-                            lastArg.AddValue(values[i]);
+                            lastArg.Add(values[i]);
                         }
                     }
 
@@ -100,14 +100,35 @@ namespace JeremyOne.UserInput {
         /// </summary>
         /// <param name="Name">Name of argument</param>
         /// <returns>An Argument object, or if the argument does not exist a empty argument with no value is returned</returns>
-        public Argument GetArgument(string Name) {
+        public Argument Get(string Name) {
             Name = Name.ToLower();
-            var a = (from aa in this where aa.Name == Name select aa).FirstOrDefault();
+            var arg = (from thisArg in this where thisArg.Name == Name select thisArg).FirstOrDefault();
 
-            if (a != null) {
-                return a;
+            if (arg != null) {
+                return arg;
             } else {
                 return new Argument(Name.ToLower(), false);
+            }
+        }
+
+        /// <summary>
+        /// Gets argument before any name/key's, if more than one exists the argument will have more than one value
+        /// </summary>
+        /// <returns>An Argument object, or if the argument does not exist a empty argument with no value is returned</returns>
+        public Argument Default {
+            get {
+                return Get("");
+            }
+        }
+
+        /// <summary>
+        /// Gets an argument by name (a shortcut to .GetArgument())
+        /// </summary>
+        /// <param name="Name">Name of argument</param>
+        /// <returns>An Argument object, or if the argument does not exist a empty argument with no value is returned</returns>
+        public Argument this[string Name]{
+            get {
+                return Get(Name);
             }
         }
 

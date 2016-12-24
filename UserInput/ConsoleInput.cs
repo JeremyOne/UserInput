@@ -53,6 +53,24 @@ namespace JeremyOne.UserInput {
                             return (T)(object)i;
                         }
 
+                    } else if (typeof(T) == typeof(List<Uri>)) {
+                        string[] urisString = userInput.Split(',');
+                        List<Uri> uris = new List<Uri>();
+                        valid = true;
+
+                        foreach (string uriString in urisString) {
+                            Uri parsedUri;
+                            if (Uri.TryCreate(uriString, UriKind.Absolute, out parsedUri)) {
+                                uris.Add(parsedUri);
+                            } else {
+                                valid = false;
+                            }
+                        }
+
+                        if (valid) {
+                            return (T)(object)uris;
+                        }
+
                     } else if (typeof(T) == typeof(int)) {
                         int i;
                         if (int.TryParse(userInput, out i)) {

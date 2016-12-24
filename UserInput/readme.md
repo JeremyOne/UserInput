@@ -62,18 +62,15 @@ namespace Program{
 }
 ```
 
-## Filtering
-Yet to implement
+## Console Input
+Several functions to help with common user prompts at the console
 
-## Encoding
-Yet to implement
-
-## Formatting
-Yet to implement
+#### UerInput.Console.PromptUser
+Prompts for user input, result can be automatically parced to a strong type 
 
 ## String Extentions
 
-###string.SmartSplit()
+### string.SmartSplit()
 Splits a string while respecting escape charcters, useful for splitting CSV's that may also have commas in their values
 
 Example useage:
@@ -86,3 +83,12 @@ string[] standardSplit = example.Split(',');
 string[] smartSplit = example.SmartSplit(',', '\'');
 //Returns: ["test", "$1,234.56"]
 ```
+
+## Filtering
+Soon
+
+## Encoding
+Soon
+
+## Formatting
+Soon

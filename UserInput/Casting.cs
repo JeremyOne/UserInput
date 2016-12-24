@@ -4,54 +4,49 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 
-namespace JeremyOne.UserInput
-{
-    public class Casting
-    {
-        
-        ///Get a decimal from a object, usualy a string, or a object that is parsable from the .ToString() method
-        public static Decimal GetDecimal(object Input) {
+namespace JeremyOne.UserInput {
+    public class Casting {
+
+        ///Get a decimal from a object, usually a string, or a object that is parseable from the .ToString() method
+        public static decimal? GetDecimal(object Input) {
             var dec = new decimal();
             string value = Input.ToString();
 
-            decimal.TryParse(value, out dec);
-
-            return dec;
+            if (decimal.TryParse(value, out dec)) {
+                return dec;
+            } else {
+                return null;
+            }
         }
 
-        ///<summary>Get a int from a object, usualy a string, or a object that is parsable from the .ToString() method </summary>
-        public static int GetInt(object Input) {
+        ///<summary>Get a int from a object, usually a string, or a object that is parseable from the .ToString() method </summary>
+        public static int? GetInt(object Input) {
             int valueInt;
             string valueString = Input.ToString();
 
-            int.TryParse(valueString, out valueInt);
-
-            return valueInt;
+            if (int.TryParse(valueString, out valueInt)) {
+                return valueInt;
+            } else {
+                return null;
+            }
         }
 
-        ///<summary>Get a Date from a object, usualy a string, or a object that is parsable from the .ToString() method </summary>
+        ///<summary>Get a Date from a object, usually a string, or a object that is parseable from the .ToString() method </summary>
         public static Nullable<DateTime> GetDate(object Input) {
-            if (Input is DateTime)
-            {
+            if (Input is DateTime) {
                 return (DateTime)Input;
             }
 
-            if (Input != null)
-            {
+            if (Input != null) {
                 string valueString = Input.ToString();
                 DateTime dateValue = new DateTime();
 
-                if (DateTime.TryParse(valueString, out dateValue))
-                {
+                if (DateTime.TryParse(valueString, out dateValue)) {
                     return dateValue;
-                }
-                else
-                {
+                } else {
                     return null;
                 }
-            }
-            else
-            {
+            } else {
                 return null;
             }
         }
@@ -70,16 +65,14 @@ namespace JeremyOne.UserInput
             FieldInfo[] fromFields = fromType.GetFields(); // Obtain all fields
             FieldInfo[] toFields = toType.GetFields(); // Obtain all fields
 
-            foreach (var fromfield in fromFields)
-            {
+            foreach (var fromfield in fromFields) {
                 var toField = (from f in toFields
                                where
                                    (f.FieldType == fromfield.FieldType) &&
                                    (f.Name == fromfield.Name)
                                select f).FirstOrDefault();
 
-                if (toField != null)
-                {
+                if (toField != null) {
                     toField.SetValue(ToObject, fromfield.GetValue(FromObject));
                 }
             }
@@ -87,6 +80,6 @@ namespace JeremyOne.UserInput
             return ToObject;
 
         }
-        
+
     }
 }

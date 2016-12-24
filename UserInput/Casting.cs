@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using System.Net;
 
 namespace JeremyOne.UserInput {
     public class Casting {
@@ -49,6 +50,44 @@ namespace JeremyOne.UserInput {
             } else {
                 return null;
             }
+        }
+
+        public static IPAddress GetIPAddress(object Input) {
+            if (Input is IPAddress) {
+                return (IPAddress)Input;
+            }
+
+            if (Input != null) {
+                string valueString = Input.ToString();
+                IPAddress value;
+
+                if (IPAddress.TryParse(valueString, out value)) {
+                    return value;
+                } else {
+                    return null;
+                }
+            }
+
+            return null;
+        }
+
+        public static Uri GetUri(object Input) {
+            if (Input is Uri) {
+                return (Uri)Input;
+            }
+
+            if (Input != null) {
+                string valueString = Input.ToString();
+                Uri value;
+
+                if (Uri.TryCreate(valueString, UriKind.RelativeOrAbsolute, out value)) {
+                    return value;
+                } else {
+                    return null;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>

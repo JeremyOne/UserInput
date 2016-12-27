@@ -36,6 +36,19 @@ namespace JeremyOne.UserInput.NunitTests {
             Assert.AreEqual(test6.Value, 100);
             Assert.AreEqual(test7.HasValue, false);
             Assert.AreEqual(test8.HasValue, false);
+
+            var test9 = Casting.GetIPAddress("127.0.0.1");
+            var test10 = Casting.GetIPAddress("999.0.0.0");
+            var test11 = Casting.GetIPAddress("Not an IP");
+
+            byte[] ipBytes = { 0x7f, 0x0, 0x0, 0x1 };
+            Assert.AreEqual(test9, new System.Net.IPAddress(ipBytes));
+            Assert.AreEqual(test10 == null, true);
+            Assert.AreEqual(test11 == null, true);
+
+            var test12 = Casting.GetUri("http://127.0.0.1");
+            Assert.AreEqual(test12, new Uri("http://127.0.0.1"));
+
         }
     }
 }

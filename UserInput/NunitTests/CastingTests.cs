@@ -17,7 +17,7 @@ namespace JeremyOne.UserInput.NunitTests {
             //Test dates
             Assert.AreEqual(test1.HasValue, true, "Standard format has value");
             Assert.AreEqual(test1.Value, new DateTime(2000,1,1), "Standard format date is correct");
-            Assert.AreEqual(test2.HasValue, false, "Bad format has no value");
+            Assert.AreEqual(test2.HasValue, false, "Invalid format has no value");
 
             //Define decimals
             var test3 = Casting.GetDecimal("100");
@@ -39,8 +39,8 @@ namespace JeremyOne.UserInput.NunitTests {
             //Test Ints
             Assert.AreEqual(test6.HasValue, true, "100 has value");
             Assert.AreEqual(test6.Value, 100, "100 value is correct");
-            Assert.AreEqual(test7.HasValue, false, "100.01 has no value");
-            Assert.AreEqual(test8.HasValue, false, "invalid has no value");
+            Assert.AreEqual(test7.HasValue, false, "100.01 (decimal) has no value");
+            Assert.AreEqual(test8.HasValue, false, "invalid int has no value");
 
             //define IP
             var test9 = Casting.GetIPAddress("127.0.0.1");
@@ -49,7 +49,7 @@ namespace JeremyOne.UserInput.NunitTests {
 
             //test IP
             byte[] ipBytes = { 0x7f, 0x0, 0x0, 0x1 };
-            Assert.AreEqual(test9, new System.Net.IPAddress(ipBytes), "IP byes are correct");
+            Assert.AreEqual(test9, new System.Net.IPAddress(ipBytes), "IP bytes are correct");
             Assert.Null(test10, "Out of range IP is null");
             Assert.Null(test11, "Invalid data null");
 

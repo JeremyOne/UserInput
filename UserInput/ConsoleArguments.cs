@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 namespace JeremyOne.UserInput {
     public class ConsoleArguments : List<Argument> {
 
-        string[] NameIndicators = { "/" };
-        char[] ValueSeperators = { ':' };
+        string[] NameIndicators = { "/", "-", "--" };
+        char[] ValueSeperators = { ':' }; //space is an implied separator
 
-	/// <summary>A library for parcing arguments from c# and other dotnet console applications</summary
+	    /// <summary>A library for parsing arguments on console applications</summary
         /// <param name="_Arguments">Standard arguments array from console application</param>
-        /// <param name="_NameIndicators">Strings that signal the start of a argument (default: '/')</param>
-        /// <param name="_ValueSeperators">Strings that signal the start of the value in an argument (default: ':')
-        /// Note: A space is ALWAYS a separator unless values are escaped with double quotes</param>
+        /// <param name="_NameIndicators">Strings that signal the start of a argument name</param>
+        /// <param name="_ValueSeperators">Strings that signal the start of the value in an argument
+        /// Note: A space is ALWAYS a separator unless values are escaped with quotes</param>
         public ConsoleArguments(string[] _Arguments, string[] _NameIndicators = null, char[] _ValueSeperators = null) {
             if (_NameIndicators != null) {
                 //order by length to make sure that longer indicators are processed first ('--' before '-').
@@ -28,7 +28,8 @@ namespace JeremyOne.UserInput {
             ReadArguments(_Arguments);
         }
 
-        /// <param name="_Arguments">Standard arguments array from console application</param>
+        /// <param name="_Arguments">Standard arguments array from console application
+        /// By default argument names will start with '/', '--' or '-' and values are separated with ':' or ' '.</param>
 		public ConsoleArguments(string[] _Arguments) {
             ReadArguments(_Arguments);
         }

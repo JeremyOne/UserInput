@@ -26,11 +26,16 @@ namespace JeremyOne.UserInput {
             this.AddRange(_Values);
         }
 
+        /// <summary>
+        /// Gets a item in this argument's array
+        /// </summary>
+        /// <param name="index">Index of the desired item</param>
+        /// <returns>The item as an argument if it exists, an empty argument if it does not exist</returns>
         public Argument GetItem(int index) {
             if (index < this.Count()) {
                 return new Argument(Name, this[index], true);
             } else {
-                throw new IndexOutOfRangeException();
+                return new Argument(Name, false);
             }
         }
 
